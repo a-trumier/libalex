@@ -21,22 +21,22 @@ C_OBJS=$(patsubst src/%.c, obj/%.o, $(C_FILES))
 
 all: libalex.a
 
-test: test/test_driver
+test: libalex.a test/test_driver
 
 test/test_driver: test/test_driver.o
-	$(CC) $(LDFLAGS) -o $@ $<
+	$(CC) $(LDFLAGS) -o $@ $< libalex.a
 
 test/test_driver.o: test/test_driver.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -Iinclude/ -c -o $@ $<
 
 libalex.a: $(AS_OBJS) $(C_OBJS)
 	$(AR) rcs $@ $^
 
-%.o: %.c
+obj/%.o: src/%.c
 	@mkdir -p obj
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-%.o: %.s
+obj/%.o: src/%.s
 	@mkdir -p obj
 	$(CC) $(CFLAGS) -c -o $@ $<
 

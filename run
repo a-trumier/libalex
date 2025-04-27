@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# simple run script to run the test driver.
+
+qemu-riscv64 test/test_driver
