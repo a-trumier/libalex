@@ -10,8 +10,8 @@ QEMU=qemu-riscv64
 
 CC=$(PREF)gcc
 AR=$(CC)-ar
-CFLAGS=-Wall -Wextra -nostdlib -ffreestanding
-LDFLAGS=
+CFLAGS=-Wall -Wextra -ffreestanding -Iinclude/
+LDFLAGS=-nostdlib
 
 AS_FILES=$(wildcard src/*.s)
 AS_OBJS=$(patsubst src/%.s, obj/%.o, $(AS_FILES))
@@ -27,7 +27,7 @@ test/test_driver: test/test_driver.o
 	$(CC) $(LDFLAGS) -o $@ $< libalex.a
 
 test/test_driver.o: test/test_driver.c
-	$(CC) $(CFLAGS) -Iinclude/ -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 libalex.a: $(AS_OBJS) $(C_OBJS)
 	$(AR) rcs $@ $^
